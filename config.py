@@ -32,7 +32,7 @@ class Config:
     # Ensure temp directory exists
     os.makedirs(TEMP_DIR, exist_ok=True)
     
-    # yt-dlp base options
+    # yt-dlp base options for 1000+ supported platforms
     YT_DLP_OPTIONS = {
         'outtmpl': f'{TEMP_DIR}/%(title)s.%(ext)s',
         'format': 'best',
@@ -43,18 +43,18 @@ class Config:
         'writeautomaticsub': False,
         'quiet': True,
         'no_warnings': True,
+        'socket_timeout': 30,
+        'retries': 3,
+        'fragment_retries': 3,
+        'geo_bypass': True,
         'http_headers': {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
             'Accept-Language': 'en-US,en;q=0.9',
-        },
-        'extractor_args': {
-            'youtube': {
-                'player_client': ['android', 'ios', 'mweb', 'tv', 'web'],
-            }
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
         }
     }
     
-    # Automatically attach cookies file if present
+    # Automatically attach cookies file if present (e.g. for Instagram or age-restricted sites)
     if os.path.exists(COOKIE_FILE):
         YT_DLP_OPTIONS['cookiefile'] = COOKIE_FILE
 

@@ -110,11 +110,20 @@ def format_error_message(error: Exception, platform: str = None) -> str:
     else:
         return f"❌ Download failed: {str(error)[:100]}..."
 
+def is_youtube_url(url: str) -> bool:
+    """Check if the given URL is from YouTube"""
+    if not url:
+        return False
+    url_lower = url.lower()
+    return any(domain in url_lower for domain in [
+        'youtube.com', 'youtu.be', 'm.youtube.com', 'music.youtube.com'
+    ])
+
 def get_platform_from_url(url: str) -> str:
     """Extract platform name from URL"""
     url_lower = url.lower()
     
-    if 'youtube.com' in url_lower or 'youtu.be' in url_lower:
+    if is_youtube_url(url):
         return 'YouTube'
     elif 'tiktok.com' in url_lower:
         return 'TikTok'
@@ -122,14 +131,20 @@ def get_platform_from_url(url: str) -> str:
         return 'Instagram'
     elif 'twitter.com' in url_lower or 'x.com' in url_lower:
         return 'Twitter'
-    elif 'facebook.com' in url_lower or 'fb.watch' in url_lower:
+    elif 'facebook.com' in url_lower or 'fb.watch' in url_lower or 'fb.com' in url_lower:
         return 'Facebook'
+    elif 'reddit.com' in url_lower or 'redd.it' in url_lower:
+        return 'Reddit'
+    elif 'pinterest.com' in url_lower or 'pin.it' in url_lower:
+        return 'Pinterest'
     elif 'vimeo.com' in url_lower:
         return 'Vimeo'
     elif 'dailymotion.com' in url_lower:
         return 'Dailymotion'
-    elif 'reddit.com' in url_lower:
-        return 'Reddit'
+    elif 'soundcloud.com' in url_lower:
+        return 'SoundCloud'
+    elif 'twitch.tv' in url_lower:
+        return 'Twitch'
     else:
         return 'Unknown'
 

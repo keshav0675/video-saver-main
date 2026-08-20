@@ -144,9 +144,9 @@ def print_startup_banner():
 ║           🎬 Telegram Video Downloader Bot 🎬               ║
 ║                                                              ║
 ║  Features:                                                   ║
-║  • Download videos from YouTube, TikTok, Instagram & more    ║
+║  • Download videos from TikTok, Instagram, Twitter/X & more ║
 ║  • Extract audio in MP3, M4A, OGG formats                   ║
-║  • Quality selection (720p, 1080p, Best)                    ║
+║  • Quality selection (360p, 480p, Best)                     ║
 ║  • Progress tracking and rate limiting                       ║
 ║  • Support for 1000+ platforms via yt-dlp                   ║
 ║                                                              ║
