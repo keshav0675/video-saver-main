@@ -64,51 +64,31 @@ def format_error_message(error: Exception, platform: str = None) -> str:
     error_str = str(error).lower()
     p_name = (platform or "This platform").title()
     
-    # Check for bot challenge / login / cookies required
-    if 'bot' in error_str or 'sign in' in error_str or 'login' in error_str or 'cookies' in error_str or 'authenticated' in error_str:
-        if platform and platform.lower() == 'instagram':
-            return (
-                "❌ <b>Instagram Login Required:</b>\n\n"
-                "Instagram blocks video downloads from cloud server IP addresses without authentication.\n"
-                "💡 <i>Tip: Export your browser cookies to a <code>cookies.txt</code> file on the server to enable Instagram downloads.</i>"
-            )
-        elif platform and platform.lower() == 'youtube':
-            return (
-                "❌ <b>YouTube Anti-Bot Block:</b>\n\n"
-                "YouTube is requiring authentication for this server IP.\n"
-                "💡 <i>Tip: Add a <code>cookies.txt</code> file on the server or try another video.</i>"
-            )
-        else:
-            return (
-                f"❌ <b>{p_name} Authentication Required:</b>\n\n"
-                f"{p_name} requires a login/cookies session to download from this server.\n"
-                "💡 <i>Tip: Add a <code>cookies.txt</code> file on the server or try another link.</i>"
-            )
-    
     if '404' in error_str or 'not found' in error_str:
-        return "❌ <b>Video Not Found (404):</b> The video might be deleted, private, or the URL is invalid."
+        return f"❌ <b>Video Not Found (404):</b> The video might be deleted, private, or the URL is invalid."
+        
+    if 'private' in error_str or 'unavailable' in error_str:
+        return f"❌ <b>{p_name} Content Unavailable:</b> The video might be private, deleted, or region-locked."
         
     if 'no video formats found' in error_str or 'keyerror' in error_str or 'extractor error' in error_str:
-        return f"❌ <b>Extraction Failed ({p_name}):</b> Unable to parse this video. The website structure may have changed or the content is private/restricted."
+        return f"❌ <b>Extraction Failed ({p_name}):</b> Unable to parse this video. The website structure may have changed or the link is invalid."
     
-    # Check for specific error types
-    if 'private' in error_str or 'unavailable' in error_str:
-        return f"❌ <b>{p_name} Content Unavailable:</b> The content might be private, deleted, or region-locked."
+    if 'login required' in error_str or 'account is private' in error_str:
+        return f"❌ <b>{p_name} Login Required:</b> This post or account is private or requires login to view."
     
-    elif 'network' in error_str or 'connection' in error_str:
-        return "❌ Network error. Please check your connection and try again."
+    if 'network' in error_str or 'connection' in error_str:
+        return "❌ <b>Network error.</b> Please check the connection and try again."
     
-    elif 'timeout' in error_str:
-        return "❌ Download timeout. The content might be too large or server is slow."
+    if 'timeout' in error_str:
+        return "❌ <b>Download timeout.</b> The content might be too large or the server is slow."
     
-    elif 'format' in error_str:
-        return "❌ Requested format not available. Try a different quality option."
+    if 'format' in error_str:
+        return "❌ <b>Requested format not available.</b> Try a different quality option."
     
-    elif 'ffmpeg' in error_str:
-        return "❌ Audio processing failed. FFmpeg might not be installed properly."
+    if 'ffmpeg' in error_str:
+        return "❌ <b>Audio processing failed.</b> FFmpeg might not be installed properly on the server."
     
-    else:
-        return f"❌ Download failed: {str(error)[:100]}..."
+    return f"❌ <b>Download failed:</b> {str(error)[:120]}"
 
 def is_youtube_url(url: str) -> bool:
     """Check if the given URL is from YouTube"""
