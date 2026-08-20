@@ -34,7 +34,7 @@ class MessageTemplates:
     def welcome_message() -> str:
         return (
             "🎬 <b>Video Downloader Bot</b>\n\n"
-            "I can download videos from YouTube, TikTok, Instagram, Twitter, and many other platforms!\n\n"
+            "I can download videos from TikTok, Instagram, Twitter/X, Reddit, Facebook, Pinterest, Vimeo, and 1000+ other platforms!\n\n"
             "🚀 <b>How to use:</b>\n"
             "• Just send me any video URL\n"
             "• Or use the buttons below\n\n"
@@ -50,22 +50,26 @@ class MessageTemplates:
             "2. Choose Video or Audio\n"
             "3. Select quality/format\n"
             "4. Wait for your download!\n\n"
-            "🌐 <b>Supported Platforms:</b>\n"
-            "• YouTube (youtube.com, youtu.be)\n"
-            "• TikTok (tiktok.com)\n"
-            "• Instagram (instagram.com)\n"
-            "• Twitter (twitter.com, x.com)\n"
-            "• And 1000+ more platforms!\n\n"
+            "🌐 <b>Supported Platforms (1000+):</b>\n"
+            "• 🎵 TikTok\n"
+            "• 📸 Instagram\n"
+            "• 🐦 Twitter / X\n"
+            "• 🤖 Reddit\n"
+            "• 📘 Facebook\n"
+            "• 📌 Pinterest\n"
+            "• 🎬 Vimeo, Dailymotion\n"
+            "• 🔊 SoundCloud, Bandcamp\n"
+            "• 🎮 Twitch Clips\n"
+            "• ...and hundreds more!\n\n"
             "🎬 <b>Video Quality Options:</b>\n"
-            "• 📱 720p - Fast download, smaller file\n"
-            "• 🎬 1080p - Balanced quality and size\n"
-            "• ⭐ Best - Highest available quality\n\n"
+            "• 📱 360p / 480p - Fast download, smaller file\n"
+            "• 🎬 Best - Highest available quality (up to 50MB)\n\n"
             "🎵 <b>Audio Format Options:</b>\n"
             "• 🎵 MP3 - Universal compatibility\n"
             "• 🎼 M4A - High quality, smaller size\n"
             "• 🎶 OGG - Open source format\n\n"
             "⚠️ <b>Limitations:</b>\n"
-            "• Maximum file size: 50MB\n"
+            "• Maximum file size: 50MB (Telegram limit)\n"
             "• Rate limit: 5 downloads per hour\n"
             "• Private content not supported\n\n"
             "💡 <b>Tip:</b> Just paste any video link - no commands needed!"
@@ -74,10 +78,14 @@ class MessageTemplates:
     @staticmethod
     def content_type_selection(video_info: dict) -> str:
         platform_emoji = {
-            'youtube': '📺',
             'tiktok': '🎵',
             'instagram': '📸',
             'twitter': '🐦',
+            'facebook': '📘',
+            'reddit': '🤖',
+            'pinterest': '📌',
+            'vimeo': '🎬',
+            'soundcloud': '🔊',
         }.get(video_info['platform'].lower(), '🎬')
         
         return (
@@ -91,10 +99,14 @@ class MessageTemplates:
     @staticmethod
     def quality_selection(content_type: str, video_info: dict) -> str:
         platform_emoji = {
-            'youtube': '📺',
             'tiktok': '🎵',
             'instagram': '📸',
             'twitter': '🐦',
+            'facebook': '📘',
+            'reddit': '🤖',
+            'pinterest': '📌',
+            'vimeo': '🎬',
+            'soundcloud': '🔊',
         }.get(video_info['platform'].lower(), '🎬')
         
         type_text = "🎬 Video Quality" if content_type == 'video' else "🎵 Audio Format"
@@ -160,7 +172,7 @@ class MessageTemplates:
             "❌ <b>Invalid URL</b>\n\n"
             "Please provide a valid video URL.\n\n"
             "📝 <b>Usage:</b> /download &lt;video_url&gt;\n"
-            "💡 <b>Example:</b> /download https://youtube.com/watch?v=..."
+            "💡 <b>Example:</b> /download https://www.tiktok.com/@user/video/..."
         )
     
     @staticmethod
@@ -169,9 +181,10 @@ class MessageTemplates:
             "🤔 <b>No video URL found!</b>\n\n"
             "Please paste a valid video link.\n\n"
             "💡 <b>Examples:</b>\n"
-            "• YouTube: https://youtube.com/watch?v=...\n"
             "• TikTok: https://tiktok.com/@user/video/...\n"
-            "• Instagram: https://instagram.com/p/..."
+            "• Instagram: https://instagram.com/reel/...\n"
+            "• Twitter / X: https://x.com/user/status/...\n"
+            "• Reddit: https://reddit.com/r/.../comments/..."
         )
     
     @staticmethod
@@ -194,5 +207,5 @@ class MessageTemplates:
         return (
             "⏳ <b>Waiting for your link...</b>\n\n"
             "📝 Please paste any video URL and I'll process it for you!\n\n"
-            "🌐 <b>Supported platforms:</b> YouTube, TikTok, Instagram, Twitter, and 1000+ more!"
+            "🌐 <b>Supported platforms:</b> TikTok, Instagram, Twitter/X, Reddit, Facebook, Pinterest, and 1000+ more!"
         )

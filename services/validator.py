@@ -8,7 +8,7 @@ import yt_dlp
 from urllib.parse import urlparse
 from typing import Dict, Tuple, Optional
 from config import Config
-from utils.helpers import get_platform_from_url, format_error_message
+from utils.helpers import get_platform_from_url, format_error_message, is_youtube_url
 
 logger = logging.getLogger(__name__)
 
@@ -42,6 +42,23 @@ class URLValidator:
         if not self.url_pattern.match(url):
             return False, "❌ Invalid URL format. Please provide a valid video URL."
         
+        # Check and reject YouTube URLs
+        if is_youtube_url(url):
+            return False, (
+                "❌ <b>YouTube is not supported.</b>\n\n"
+                "This bot supports <b>1000+ other platforms</b> including:\n"
+                "• 🎵 TikTok\n"
+                "• 🐦 Twitter / X\n"
+                "• 🤖 Reddit\n"
+                "• 📘 Facebook\n"
+                "• 📌 Pinterest\n"
+                "• 🎬 Vimeo & Dailymotion\n"
+                "• 🔊 SoundCloud\n"
+                "• 🎮 Twitch Clips\n"
+                "• ...and hundreds more!\n\n"
+                "Please send a video link from any supported platform."
+            )
+        
         try:
             parsed = urlparse(url)
             if not parsed.scheme or not parsed.netloc:
@@ -67,6 +84,9 @@ class URLValidator:
         Raises:
             ValueError: If extraction fails
         """
+        if is_youtube_url(url):
+            raise ValueError("❌ YouTube is not supported. Please send a link from TikTok, Twitter/X, Reddit, Facebook, Pinterest, Vimeo, etc.")
+            
         ydl_opts = Config.YT_DLP_OPTIONS.copy()
         ydl_opts.update({
             'quiet': True,
@@ -128,6 +148,9 @@ class URLValidator:
         Returns:
             True if platform is supported
         """
+        if is_youtube_url(url):
+            return False
+            
         try:
             # Try to extract info without downloading
             ydl_opts = Config.YT_DLP_OPTIONS.copy()
